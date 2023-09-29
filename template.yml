@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: "An example Golang AWS SAM Lambda project"
+
+Globals:
+  Function:
+    Timeout: 5
+    MemorySize: 256
+
+Resources:
+  AwsLambdaExample:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      CodeUri: "cmd/lambda_app"
+      Handler: lambda_handler
+      Runtime: go1.x
+      Architectures:
+        - x86_64
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /api/test
+            Method: GET
+      Environment:
+        Variables:
+          PARAM1: EXAMPLE_VALUE
