@@ -7,7 +7,7 @@ AWS_REGION ?= us-east-1
 
 build:
 	@echo "Building..."
-	sam build
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 sam build
 
 start_api:
 	@echo "Start local..."
