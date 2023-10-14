@@ -11,11 +11,12 @@ Resources:
   AwsLambdaExample:
     Type: "AWS::Serverless::Function"
     Properties:
-      CodeUri: "cmd/lambda_app"
-      Handler: lambda_handler
-      Runtime: go1.x
+      CodeUri: build/lambda_app.zip
+      Handler: bootstrap
+      Runtime: provided.al2
+      PackageType: Zip
       Architectures:
-        - x86_64
+        - arm64
       Events:
         CatchAll:
           Type: Api
