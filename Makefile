@@ -19,16 +19,16 @@ build_sam:
 
 start_api:
 	@echo "Start local..."
-	sam local start-api
+	sam local start-api -p 4000 --config-env dev
 
 start: build zip start_api
 
 deploy_sam:
 	@echo "Deploy with sam..."
-	sam deploy --region $(AWS_REGION) --stack-name $(STACK_NAME) --profile $(AWS_PROFILE) --guided
+	sam deploy -t template.yml --config-env prod --s3-bucket aws-example-stack-bucket --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND --profile $(AWS_PROFILE)
 
 deploy: build zip deploy_sam
 
 delete:
 	@echo "Delete..."
-	sam delete --region $(AWS_REGION) --stack-name $(STACK_NAME) --profile $(AWS_PROFILE)
+	aws cloudformation delete-stack --region $(AWS_REGION) --stack-name $(STACK_NAME) --profile $(AWS_PROFILE)

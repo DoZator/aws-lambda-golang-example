@@ -1,0 +1,11 @@
+version: 0.1
+dev:
+  local_start_api:
+    parameters:
+      stack_name: aws-example-stack-dev
+      region: us-east-1
+prod:
+  deploy:
+    parameters:
+      stack_name: aws-example-stack-prod
+      region: us-east-1

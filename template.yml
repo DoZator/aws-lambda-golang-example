@@ -7,6 +7,12 @@ Globals:
     Timeout: 5
     MemorySize: 256
 
+Parameters:
+  ParamOne:
+    Type: String
+    Description: ParamOne value
+    Default: empty
+
 Resources:
   AwsLambdaExample:
     Type: "AWS::Serverless::Function"
@@ -18,11 +24,16 @@ Resources:
       Architectures:
         - arm64
       Events:
-        CatchAll:
+        AwsLambda:
           Type: Api
           Properties:
             Path: /api/test
             Method: GET
       Environment:
         Variables:
-          PARAM1: EXAMPLE_VALUE
+          PARAM1: !Ref ParamOne
+
+Outputs:
+  AwsLambdaApi:
+    Description: "AwsLambda lambda endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
